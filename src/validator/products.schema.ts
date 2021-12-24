@@ -3,6 +3,7 @@ import { requestValidator } from '../middlewares/request-validator.middleware';
 import { tokenVerification } from '../middlewares/verify-token.middleware';
 
 export const newProductSchema: any = [
+  tokenVerification,
   body('name').notEmpty().withMessage('Name of the product is required.'),
   body('price').notEmpty().withMessage('Price is required.'),
   body('price').isNumeric().withMessage('Price must be numeric.'),
@@ -11,10 +12,16 @@ export const newProductSchema: any = [
   body('seller').notEmpty().withMessage('Must provide product seller.'),
   body('stock').notEmpty().isNumeric().withMessage('Must provide product stock.'),
   requestValidator,
-  tokenVerification
+];
+
+export const productIdSchema: any = [
+  check('id', 'Product ID is required.').notEmpty(),
+  check('id', 'Must be a valid product ID.').isMongoId(),
+  requestValidator,
 ];
 
 export const productUpdateSchema: any = [
+  tokenVerification,
   check('id', 'Product ID is required.').notEmpty(),
   check('id', 'Must be a valid product ID.').isMongoId(),
   check('name', 'Must be a valid name.').isString(),
@@ -25,13 +32,8 @@ export const productUpdateSchema: any = [
   requestValidator,
 ];
 
-export const productIdSchema: any = [
-  check('id', 'Product ID is required.').notEmpty(),
-  check('id', 'Must be a valid product ID.').isMongoId(),
-  requestValidator,
-];
-
 export const productDeleteSchema: any = [
+  tokenVerification,
   check('id', 'Product ID is required.').notEmpty(),
   check('id', 'Must be a valid product ID.').isMongoId(),
   requestValidator,

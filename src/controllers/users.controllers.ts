@@ -5,8 +5,8 @@ import { generateJwt } from '../utils/generate-jwt';
 
 export const newUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email } = req.body;
-    const emailExist = await User.findOne({ email: RegExp(email, 'i') });
+    const email = req.body.email.toLowerCase();
+    const emailExist = await User.findOne({ email });
 
     if (emailExist) return next(new RequestError('Email already registered.', 400));
     const newUser = await new User(req.body).save();
@@ -21,18 +21,22 @@ export const newUser = async (req: Request, res: Response, next: NextFunction) =
 
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // const { id } = req.params;
-    // const user = await User.findOne({ id });
-    // if (user) return next(new RequestError('Email already registered.', 400));
-
+    const { id } = req.params;
+    const user = await User.findByIdAndUpdate(id, req.body, { new: true });
+    if (!user) return next(new RequestError('User does not exist.', 400));
+    res.status(204).json({ msg: 'User updated successfully!.', user });
   } catch (err) {
     console.log(err);
     next(new UnhandledError());
   }
 };
 
-export const deleteUser = (req: Request, res: Response, next: NextFunction) => {
+export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const { id } = req.params;
+    const user = await User.findByIdAndUpdate(id, { status: false }, { new: true });
+    if (!user) return next(new RequestError('User does not exist.', 400));
+    res.status(204).json({ msg: 'User updated successfully!.', user });
   } catch (err) {
     console.log(err);
     next(new UnhandledError());

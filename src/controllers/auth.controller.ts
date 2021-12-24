@@ -7,10 +7,11 @@ import { options } from '../utils/cookie-params';
 export const authLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // Getting inputs from the requests
-    const { email, password } = req.body;
+    const email = req.body.email.toLowerCase();
+    const { password } = req.body;
 
     // Validating if tue user emails exists on DB
-    const user = await User.findOne({ email: RegExp(email, 'i') }).select('+password');
+    const user = await User.findOne({ email }).select('+password');
     if (!user) return next(new RequestError('User does not exist.', 400));
 
     // Validating if password match with the BD
@@ -20,7 +21,7 @@ export const authLogin = async (req: Request, res: Response, next: NextFunction)
     // Generating session token
     const token = user.getJwtToken();
 
-    // successful login!
+    // Save token in cookies!
     res.status(200).cookie('token', token, options).json({ msg: 'login successful.', token });
   } catch (err) {
     console.log(err);
