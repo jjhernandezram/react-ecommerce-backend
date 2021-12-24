@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import User from '../models/user.model';
 import { RequestError, UnhandledError } from '../errors/error-handlers';
-import { options } from '../utils/cookie-params';
+import { deleteToken, saveToken } from '../utils/cookie-params';
 
 export const authLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -22,7 +22,18 @@ export const authLogin = async (req: Request, res: Response, next: NextFunction)
     const token = user.getJwtToken();
 
     // Save token in cookies!
-    res.status(200).cookie('token', token, options).json({ msg: 'login successful.', token });
+    res.status(200).cookie('token', token, saveToken).json({ msg: 'login successful.', token });
+
+  } catch (err) {
+    console.log(err);
+    next(new UnhandledError());
+  }
+};
+
+export const authLogout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res.status(200).cookie('token', null, deleteToken).json({msg: 'logget out.'});
+
   } catch (err) {
     console.log(err);
     next(new UnhandledError());

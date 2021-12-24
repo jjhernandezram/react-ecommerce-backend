@@ -22,9 +22,12 @@ export const newUser = async (req: Request, res: Response, next: NextFunction) =
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
+    
     const user = await User.findByIdAndUpdate(id, req.body, { new: true });
     if (!user) return next(new RequestError('User does not exist.', 400));
-    res.status(204).json({ msg: 'User updated successfully!.', user });
+    
+    res.status(200).json({ msg: 'User updated successfully!.', user });
+
   } catch (err) {
     console.log(err);
     next(new UnhandledError());
@@ -36,7 +39,7 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
     const { id } = req.params;
     const user = await User.findByIdAndUpdate(id, { status: false }, { new: true });
     if (!user) return next(new RequestError('User does not exist.', 400));
-    res.status(204).json({ msg: 'User updated successfully!.', user });
+    res.status(200).json({ msg: 'User updated successfully!.', user });
   } catch (err) {
     console.log(err);
     next(new UnhandledError());
