@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { deleteUser, newUser, updateUser } from '../controllers/users.controllers';
-import { newUserSchema, userIdSchema } from '../validator/users.schema';
+import { newUserSchema, userIdSchema } from '../validator/users.validator';
 
 const router = Router();
 

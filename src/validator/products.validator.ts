@@ -1,9 +1,11 @@
 import { body, check } from 'express-validator';
-import { requestValidator } from '../middlewares/request-validator.middleware';
-import { tokenVerification } from '../middlewares/verify-token.middleware';
+import { requestValidator } from '../middlewares/request-validator';
+import { validAdminRole } from '../middlewares/user-role';
+import { tokenVerification } from '../middlewares/verify-token';
 
 export const newProductSchema: any = [
   tokenVerification,
+  validAdminRole,
   body('name').notEmpty().withMessage('Name of the product is required.'),
   body('price').notEmpty().withMessage('Price is required.'),
   body('price').isNumeric().withMessage('Price must be numeric.'),
@@ -22,6 +24,7 @@ export const productIdSchema: any = [
 
 export const productUpdateSchema: any = [
   tokenVerification,
+  validAdminRole,
   check('id', 'Product ID is required.').notEmpty(),
   check('id', 'Must be a valid product ID.').isMongoId(),
   check('name', 'Must be a valid name.').isString(),
@@ -34,6 +37,7 @@ export const productUpdateSchema: any = [
 
 export const productDeleteSchema: any = [
   tokenVerification,
+  validAdminRole,
   check('id', 'Product ID is required.').notEmpty(),
   check('id', 'Must be a valid product ID.').isMongoId(),
   requestValidator,

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { newProduct, deleteProduct, getAllProducts, getSingleProduct, updateProduct } from '../controllers/products.controller';
-import { newProductSchema, productDeleteSchema, productIdSchema, productUpdateSchema } from '../validator/products.schema';
+import { newProduct, deleteProduct, getAllProducts, getSingleProduct, updateProduct } from '../controllers/products.controllers';
+import { newProductSchema, productDeleteSchema, productIdSchema, productUpdateSchema } from '../validator/products.validator';
 
 const router = Router();
 

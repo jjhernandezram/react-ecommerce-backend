@@ -15,7 +15,7 @@ import searchRoutes from './routes/search.route';
 import usersRoutes from './routes/users.route';
 import authRoutes from './routes/auth.route';
 
-import { errorHandler } from './middlewares/error-handler.middleware';
+import { errorHandler } from './middlewares/error-handler';
 
 // Server initialization
 const app = express();

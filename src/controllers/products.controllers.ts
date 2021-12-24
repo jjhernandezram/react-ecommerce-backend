@@ -20,7 +20,7 @@ export const newProduct = async (req: Request, res: Response, next: NextFunction
       ...body, 
     };
 
-    const newProduct = await new Product(data);//.save();
+    const newProduct = await new Product(data)//.save();
 
     res.status(201).json({ msg: 'New product added successfully.', product: newProduct });
 

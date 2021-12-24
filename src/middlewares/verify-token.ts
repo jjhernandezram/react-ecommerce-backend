@@ -7,16 +7,15 @@ import { verifyJwt } from '../utils/verify-jwt';
 export const tokenVerification = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { token } = req.cookies;
-    if (!token) return next(new RequestError('Login the get acces to this resrouce.', 401));
+    if (!token) return next(new RequestError('Login to get access to this resource.', 401));
 
     const id = verifyJwt(token);
-
     const user = await User.findById(id);
+    if (!user) return next(new RequestError('Login to get access to this resource.', 401));
 
-    if (!user) return next(new RequestError('Login the get acces to this resrouce.', 401));
-    
+    req.user = user;
+
     next();
-
   } catch (err) {
     console.log(err);
     next(new UnhandledError());

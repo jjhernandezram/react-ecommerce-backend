@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { deleteCategory, getAllCategories, getCategoryById, getProductsByCategory, newCategory, updateCategory } from '../controllers/categories.controller';
-import { categoryUpdateOrDeleteSchema, newCategorySchema } from '../validator/categories.schema';
+import { deleteCategory, getAllCategories, getCategoryById, getProductsByCategory, newCategory, updateCategory } from '../controllers/categories.controllers';
+import { categoryUpdateOrDeleteSchema, newCategorySchema } from '../validator/categories.valitador';
 
 const router = Router();
 

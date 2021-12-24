@@ -1,5 +1,5 @@
 import { body, check } from 'express-validator';
-import { requestValidator } from '../middlewares/request-validator.middleware';
+import { requestValidator } from '../middlewares/request-validator';
 
 export const newUserSchema: any = [
   body('name').notEmpty().withMessage('Username is required.'),

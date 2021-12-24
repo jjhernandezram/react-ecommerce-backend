@@ -1,6 +1,6 @@
 import { body, check } from 'express-validator';
-import { requestValidator } from '../middlewares/request-validator.middleware';
-import { tokenVerification } from '../middlewares/verify-token.middleware';
+import { requestValidator } from '../middlewares/request-validator';
+import { tokenVerification } from '../middlewares/verify-token';
 
 export const newCategorySchema: any = [
   tokenVerification,
